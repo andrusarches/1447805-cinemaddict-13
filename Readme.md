@@ -1,7 +1,7 @@
 # Проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Шорников](https://up.htmlacademy.ru/ecmascript/13/user/1447805).
-* Наставник: `Неизвестно`.
+* Наставник: [Ксения Толстых](https://htmlacademy.ru/profile/id618277).
 
 ---
 
