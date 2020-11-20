@@ -99,6 +99,7 @@ if (MOVIES_PRESENT_MOCK) {
   for (let i = 0; i < MOCK_FILM_COUNT; i++) {
     renderElement(siteFilmListContainerElement, createFilmCardTemplate(FILM_CARD_MOCK_DATA[i]), `beforeend`);
   }
+  
   renderElement(siteFilmListContainerElement, createShowMoreButtonTemplate(), `afterend`);
   if (MOVIES_EXTRA_MOCK) {
     MOVIES_EXTRA_LIST_NAMES.forEach(function (value) {
@@ -108,6 +109,7 @@ if (MOVIES_PRESENT_MOCK) {
     const filmsListExtraListElements = siteFilmsSectionElement.querySelectorAll(`.films-list--extra`);
     filmsListExtraListElements.forEach(function (value, index) {
       let extraListFilmContainer = filmsListExtraListElements[index].querySelector(`.films-list__container`);
+      
       for (let i = 0; i < MOVIES_EXTRA_CARD_LIMIT; i++) {
         renderElement(extraListFilmContainer, createFilmCardTemplate(FILM_CARD_MOCK_DATA[i]), `beforeend`);
       }
