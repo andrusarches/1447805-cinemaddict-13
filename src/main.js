@@ -12,7 +12,7 @@ import {FILMS_INITIALLY_DISPLAYED_NUMBER} from "./const.js";
 import {renderElement} from "./util.js";
 import {onShowMoreButton} from "./view/show-more-button.js";
 import {createFilmDetailsPopupTemplate} from "./view/film-details-popup.js";
-import {generateFilter, sortByRating, sortByCommentCount} from "./mock/filter.js";
+import {generateFilter, sortIntoNewArray} from "./mock/filter.js";
 
 // Variables
 
@@ -24,8 +24,8 @@ if (FILM_CARD_MOCK_DATA.length > 0) {
   filmsAvailableForDisplay = true;
 }
 
-const newSortedByRatingArray = sortByRating(FILM_CARD_MOCK_DATA);
-const newSortedByCommentCountArray = sortByCommentCount(FILM_CARD_MOCK_DATA);
+const newSortedByRatingArray = sortIntoNewArray(FILM_CARD_MOCK_DATA, `rating`);
+const newSortedByCommentCountArray = sortIntoNewArray(FILM_CARD_MOCK_DATA, `commentCount`);
 const filters = generateFilter(FILM_CARD_MOCK_DATA);
 
 // Rendering of the user rank element within the HEADER element.

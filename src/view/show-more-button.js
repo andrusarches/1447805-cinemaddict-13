@@ -33,8 +33,20 @@ export const onShowMoreButton = (evt) => {
 
   let newDisplayCount = oldDisplayCount + displayCountIncrease;
 
+  // const reducerRenderMoreFilmCards = (accumulator, currentValue, currentIndex) => {
+  //   let indexIncreaseCounter = currentIndex;
+  //   if (oldDisplayCount - currentIndex === FILM_COUNT_PER_STEP) {
+  //     return '';
+  //   }
+  //   currentIndex++;
+  //   renderElement(siteFilmListContainerElement, createFilmCardTemplate(FILM_CARD_MOCK_DATA[currentIndex]), `beforeend`);
+  //   oldDisplayCount++;
+  // };
+
   if (FILM_CARD_MOCK_DATA.length <= newDisplayCount) {
     newDisplayCount = oldDisplayCount + (FILM_CARD_MOCK_DATA.length - oldDisplayCount);
+
+    // FILM_CARD_MOCK_DATA.reduce(reducerRenderMoreFilmCards, oldDisplayCount);
     for (let i = oldDisplayCount; i < newDisplayCount; i++) {
       renderElement(siteFilmListContainerElement, createFilmCardTemplate(FILM_CARD_MOCK_DATA[i]), `beforeend`);
       oldDisplayCount++;
@@ -45,5 +57,6 @@ export const onShowMoreButton = (evt) => {
       renderElement(siteFilmListContainerElement, createFilmCardTemplate(FILM_CARD_MOCK_DATA[i]), `beforeend`);
       oldDisplayCount++;
     }
+    // FILM_CARD_MOCK_DATA.reduce(reducerRenderMoreFilmCards, oldDisplayCount);
   }
 };

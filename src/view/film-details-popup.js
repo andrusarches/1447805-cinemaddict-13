@@ -88,24 +88,16 @@ export const createFilmDetailsPopupTemplate = (filmInfo) => {
     return newFilmCommentsHTMLString;
   };
 
-  const writersArrayToString = () => {
-    const newWritersNamesArray = [];
+  const arrayToStringWMap = (array, map) => {
+    const newArray = [];
 
-    for (let i = 0; i < writers.length; i++) {
-      newWritersNamesArray.push(MOCK_WRITERS_MAP.get(writers[i]));
-    }
+    const reducerToNewArray = (accumulator, currentValue) => {
+      newArray.push(map.get(currentValue));
+    };
 
-    return newWritersNamesArray.join(`, `);
-  };
+    array.reduce(reducerToNewArray, 0);
 
-  const actorsArrayToString = () => {
-    const newActorsNamesArray = [];
-
-    for (let i = 0; i < actors.length; i++) {
-      newActorsNamesArray.push(MOCK_ACTORS_MAP.get(actors[i]));
-    }
-
-    return newActorsNamesArray.join(`, `);
+    return newArray.join(`, `);
   };
 
   const getDirectorsName = () => {
@@ -146,11 +138,11 @@ export const createFilmDetailsPopupTemplate = (filmInfo) => {
                       </tr>
                       <tr class="film-details__row">
                         <td class="film-details__term">Writers</td>
-                        <td class="film-details__cell">${writersArrayToString()}</td>
+                        <td class="film-details__cell">${arrayToStringWMap(writers, MOCK_WRITERS_MAP)}</td>
                       </tr>
                       <tr class="film-details__row">
                         <td class="film-details__term">Actors</td>
-                        <td class="film-details__cell">${actorsArrayToString()}</td>
+                        <td class="film-details__cell">${arrayToStringWMap(actors, MOCK_ACTORS_MAP)}</td>
                       </tr>
                       <tr class="film-details__row">
                         <td class="film-details__term">Release Date</td>

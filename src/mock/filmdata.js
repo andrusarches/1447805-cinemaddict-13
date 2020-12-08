@@ -239,7 +239,6 @@ const generateRandomComment = () => {
 };
 
 const generateFilmComments = (filmData) => {
-  const id = filmData.id;
   const newRandomCommentNumber = getRandomInteger(0, 10);
 
   const newComments = new Array(newRandomCommentNumber).fill().map(generateRandomComment);
@@ -256,7 +255,7 @@ const generateFilmComments = (filmData) => {
   });
 
   return {
-    id,
+    id: filmData.id,
     comments: newComments
   };
 };
@@ -274,3 +273,8 @@ COMMENTS_MOCK_DATA.forEach((item, index) => {
 FILM_CARD_MOCK_DATA.forEach((item, index) => {
   FILM_CARD_MOCK_DATA[index].commentCount = COMMENTS_MOCK_DATA[index].comments.length;
 });
+
+
+window.data = {
+  FILM_CARD_MOCK_DATA
+};
