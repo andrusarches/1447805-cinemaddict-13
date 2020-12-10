@@ -4,6 +4,7 @@ import updateLocale from "dayjs/plugin/updateLocale";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {FILM_GENRES_MAP, MOCK_DIRECTORS_MAP, MOCK_ACTORS_MAP, MOCK_WRITERS_MAP, COMMENT_REACTION, HUMANIZED_FILM_RELEASE_DATE_FORMAT} from "../const.js";
 import {COMMENTS_MOCK_DATA} from "../mock/filmdata.js";
+import {createElement} from "../util.js";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -26,7 +27,7 @@ dayjs.updateLocale(`en`, {
   }
 });
 
-export const createFilmDetailsPopupTemplate = (filmInfo) => {
+const createFilmDetailsPopupTemplate = (filmInfo) => {
   const {id, title, originalTitle, rating, country, director, writers, actors, releaseDate, duration, genres, imgSrc, description, commentCount, contentRating} = filmInfo;
 
   const getGenreHTML = (item) => {
@@ -220,3 +221,27 @@ export const createFilmDetailsPopupTemplate = (filmInfo) => {
             </form>
           </section>`;
 };
+
+export default class FilmDetailsPopup {
+  constructor(filmData) {
+    this._filmData = filmData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsPopupTemplate(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

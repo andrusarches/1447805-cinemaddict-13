@@ -1,15 +1,16 @@
 import dayjs from "dayjs";
 import {FILM_GENRES_MAP} from "../const.js";
+import {createElement} from "../util.js";
 
-export const createFilmCardTemplate = (filmInfo) => {
-  const {title, rating, releaseDate, duration, genres, imgSrc, description, commentCount} = filmInfo;
+const createFilmCardTemplate = (filmData) => {
+  const {title, rating, releaseDate, duration, genres, imgSrc, description, commentCount} = filmData;
 
   const resolvedGenre = FILM_GENRES_MAP.get(genres[0]);
 
   const releaseYear = dayjs(releaseDate).format(`YYYY`);
 
   const MAX_DESCRIPTION_LENGTH = 140;
-  return `        <article class="film-card">
+  return `<article class="film-card">
             <h3 class="film-card__title">${title}</h3>
             <p class="film-card__rating">${rating}</p>
             <p class="film-card__info">
@@ -27,3 +28,27 @@ export const createFilmCardTemplate = (filmInfo) => {
             </div>
           </article>`;
 };
+
+export default class FilmCard {
+  constructor(filmData) {
+    this._filmData = filmData;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

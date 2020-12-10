@@ -1,4 +1,5 @@
 import {capitalizeString} from "../util.js";
+import {createElement} from "../util.js";
 
 const createFilterTemplate = (filtersElement) => {
   const {name, count} = filtersElement;
@@ -6,7 +7,7 @@ const createFilterTemplate = (filtersElement) => {
   return `<a href="#${name}" class="main-navigation__item">${capitalizeString(name)} <span class="main-navigation__item-count">${count}</span></a>`;
 };
 
-export const createSiteMenuTemplate = (filterItems) => {
+const createSiteMenuTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems
     .map((filter) => createFilterTemplate(filter))
     .join(``);
@@ -19,3 +20,27 @@ export const createSiteMenuTemplate = (filterItems) => {
       <a href="#stats" class="main-navigation__additional">Stats</a>
     </nav>`;
 };
+
+export default class MainNavigation {
+  constructor(filterItems) {
+    this._filterData = filterItems;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSiteMenuTemplate(this._filterData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

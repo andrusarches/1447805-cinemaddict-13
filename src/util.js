@@ -22,10 +22,37 @@ export const getConvertedTime = (durationInMinutes) => {
   return (roundedHours > 0 ? `${roundedHours}h ${roundedMinutes}m` : `${roundedMinutes}m`);
 };
 
-// Element(any) rendering function
+// HTML template rendering function
 
-export const renderElement = (container, element, position) => {
+export const RENDER_POSITION = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RENDER_POSITION.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RENDER_POSITION.BEFOREEND:
+      container.append(element);
+      break;
+    case RENDER_POSITION.AFTEREND:
+      container.insertAdjacentElement(RENDER_POSITION.AFTEREND, element);
+      break;
+  }
+};
+
+export const renderTemplate = (container, element, position) => {
   container.insertAdjacentHTML(position, element);
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
 };
 
 export const capitalizeString = (s) => {
