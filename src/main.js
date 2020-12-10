@@ -75,14 +75,14 @@ if (filmsAvailableForDisplay) {
 
       const filmDetailsPopup = new FilmDetailsPopup(filmDataArrayElement);
 
-      render(bodyElement, filmDetailsPopup.getElement(), RENDER_POSITION.BEFOREEND);
+      bodyElement.appendChild(filmDetailsPopup.getElement());
 
       const filmDetailsPopupCloseButton = filmDetailsPopup.getElement().querySelector(`.film-details__close-btn`);
 
       const removeFilmDetailsPopup = () => {
         filmDetailsPopupCloseButton.removeEventListener(`click`, onFilmDetailsPopupCloseButton);
         document.removeEventListener(`keydown`, onEscKeyDown);
-        filmDetailsPopup.getElement().remove();
+        bodyElement.removeChild(filmDetailsPopup.getElement());
         bodyElement.classList.remove(`hide-overflow`);
         filmDetailsPopup.removeElement();
       };
