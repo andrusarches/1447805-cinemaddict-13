@@ -75,7 +75,7 @@ if (filmsAvailableForDisplay) {
 
       const filmDetailsPopup = new FilmDetailsPopup(filmDataArrayElement);
 
-      render(footerElement, filmDetailsPopup.getElement(), RENDER_POSITION.AFTEREND);
+      render(bodyElement, filmDetailsPopup.getElement(), RENDER_POSITION.BEFOREEND);
 
       const filmDetailsPopupCloseButton = filmDetailsPopup.getElement().querySelector(`.film-details__close-btn`);
 
