@@ -1,4 +1,4 @@
-import {createElement} from "../util.js";
+import AbstractElement from "./abstract.js";
 
 const createFilmSortingTemplate = () => {
   return `<ul class="sort">
@@ -8,24 +8,8 @@ const createFilmSortingTemplate = () => {
     </ul>`;
 };
 
-export default class FilmSorting {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FilmSorting extends AbstractElement {
   getTemplate() {
     return createFilmSortingTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

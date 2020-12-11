@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import {FILM_GENRES_MAP} from "../const.js";
-import {createElement} from "../util.js";
+import AbstractElement from "./abstract.js";
 
 const createFilmCardTemplate = (filmData) => {
   const {title, rating, releaseDate, duration, genres, imgSrc, description, commentCount} = filmData;
@@ -29,26 +29,35 @@ const createFilmCardTemplate = (filmData) => {
           </article>`;
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractElement {
   constructor(filmData) {
-    this._filmData = filmData;
+    super();
 
-    this._element = null;
+    this._filmData = filmData;
+    this._clickHandler = this._clickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmCardTemplate(this._filmData);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
+  _clickHandler(evt) {
+    evt.preventDefault();
 
-    return this._element;
+    this._callback.click();
   }
 
-  removeElement() {
-    this._element = null;
+  setClickHandler(callback) {
+    this._callback.click = callback;
+
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._clickHandler);
+  }
+
+  removeEventListener() {
+    this.getElement().querySelector(`.film-card__poster`).removeEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.film-card__title`).removeEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.film-card__comments`).removeEventListener(`click`, this._clickHandler);
   }
 }

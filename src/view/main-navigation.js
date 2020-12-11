@@ -1,5 +1,5 @@
-import {capitalizeString} from "../util.js";
-import {createElement} from "../util.js";
+import AbstractElement from "./abstract.js";
+import {capitalizeString} from "../utils/common.js";
 
 const createFilterTemplate = (filtersElement) => {
   const {name, count} = filtersElement;
@@ -21,26 +21,14 @@ const createSiteMenuTemplate = (filterItems) => {
     </nav>`;
 };
 
-export default class MainNavigation {
+export default class MainNavigation extends AbstractElement {
   constructor(filterItems) {
-    this._filterData = filterItems;
+    super();
 
-    this._element = null;
+    this._filterData = filterItems;
   }
 
   getTemplate() {
     return createSiteMenuTemplate(this._filterData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import {createElement} from "../util.js";
+import AbstractElement from "./abstract.js";
 
 const createExtraFilmsList = (listName) => {
   return `<section class="films-list films-list--extra">
@@ -7,26 +7,14 @@ const createExtraFilmsList = (listName) => {
           </section>`;
 };
 
-export default class ExtraFilmsList {
+export default class ExtraFilmsList extends AbstractElement {
   constructor(listName) {
-    this._listName = listName;
+    super();
 
-    this._element = null;
+    this._listName = listName;
   }
 
   getTemplate() {
     return createExtraFilmsList(this._listName);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

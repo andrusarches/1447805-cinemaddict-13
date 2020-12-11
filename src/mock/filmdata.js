@@ -1,7 +1,7 @@
 import {nanoid} from "nanoid";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import {getRandomInteger, getRandomIntegerWDecimal, getConvertedTime} from "../util.js";
+import {getRandomInteger, getRandomIntegerWDecimal, getConvertedTime} from "../utils/common.js";
 import {
   FILM_POSTERS,
   FILM_DESCRIPTION,

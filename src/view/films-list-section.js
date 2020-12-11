@@ -1,4 +1,4 @@
-import {createElement} from "../util.js";
+import AbstractElement from "./abstract.js";
 
 const createFilmsListSectionTemplate = (moviesPresentBoolean) => {
   return `<section class="films-list">
@@ -8,26 +8,14 @@ const createFilmsListSectionTemplate = (moviesPresentBoolean) => {
   `;
 };
 
-export default class FilmsListSection {
+export default class FilmsListSection extends AbstractElement {
   constructor(booleanValue) {
-    this._moviesPresentBoolean = booleanValue;
+    super();
 
-    this._element = null;
+    this._moviesPresentBoolean = booleanValue;
   }
 
   getTemplate() {
     return createFilmsListSectionTemplate(this._moviesPresentBoolean);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
