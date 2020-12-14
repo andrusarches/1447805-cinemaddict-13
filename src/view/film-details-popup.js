@@ -177,8 +177,4 @@ export default class FilmDetailsPopup extends AbstractElement {
 
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
   }
-
-  removeEventListener() {
-    this.getElement().querySelector(`.film-details__close-btn`).removeEventListener(`click`, this._clickHandler);
-  }
 }

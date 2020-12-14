@@ -27,19 +27,9 @@ export default class ShowMoreButton extends AbstractElement {
     this.getElement().addEventListener(`click`, this._clickHandler);
   }
 
-  removeEventListener() {
-    this.getElement().removeEventListener(`click`, this._clickHandler);
+  deleteElement() {
+    this.getElement().remove();
+
+    this._element = null;
   }
 }
-
-// const reducerRenderMoreFilmCards = (accumulator, currentValue, currentIndex) => {
-//   let indexIncreaseCounter = currentIndex;
-//   if (oldDisplayCount - currentIndex === FILM_COUNT_PER_STEP) {
-//     return '';
-//   }
-//   currentIndex++;
-//   render(siteFilmListContainerElement, new FilmCard(FILM_CARD_MOCK_DATA[currentIndex]).getElement(), RENDER_POSITION.BEFOREEND);
-//   oldDisplayCount++;
-// };
-
-// FILM_CARD_MOCK_DATA.reduce(reducerRenderMoreFilmCards, oldDisplayCount);

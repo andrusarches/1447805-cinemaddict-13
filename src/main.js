@@ -11,7 +11,7 @@ import TotalMovieCount from "./view/total-movie-count.js";
 import FilmDetailsPopup from "./view/film-details-popup.js";
 import PopupCommentElement from "./view/popup-comment.js";
 import {FILM_CARD_MOCK_DATA, COMMENTS_MOCK_DATA} from "./mock/filmdata.js";
-import {FILMS_INITIALLY_DISPLAYED_NUMBER} from "./const.js";
+import {FILMS_INITIALLY_DISPLAYED_NUMBER, KEYCODE_ESC} from "./const.js";
 import {render, RENDER_POSITION} from "./utils/render.js";
 import {generateFilter, sortIntoNewArray} from "./mock/filter.js";
 
@@ -88,17 +88,16 @@ if (filmsAvailableForDisplay) {
       }
 
       const removeFilmDetailsPopup = () => {
-        filmDetailsPopup.removeEventListener();
         document.addEventListener(`keydown`, onEscKeyDownPopup);
         bodyElement.removeChild(filmDetailsPopup.getElement());
+
         if (filmCommentsObject.comments.length > 0) {
           for (let i = 0; i < commentsForDeletion.length; i++) {
             if (commentsForDeletion[i] instanceof AbstractElement) {
-              commentsForDeletion[i].getElement().remove();
-              commentsForDeletion[i].removeElement();
+              commentsForDeletion[i].deleteElement();
             }
           }
-          commentsForDeletion.length = 0;
+          commentsForDeletion = [];
         }
 
         bodyElement.classList.remove(`hide-overflow`);
@@ -110,7 +109,7 @@ if (filmsAvailableForDisplay) {
       });
 
       const onEscKeyDownPopup = (evt) => {
-        if (evt.keyCode === 27) {
+        if (evt.keyCode === KEYCODE_ESC) {
           removeFilmDetailsPopup();
         }
       };
@@ -128,7 +127,7 @@ if (filmsAvailableForDisplay) {
   }
 
   if (FILM_CARD_MOCK_DATA.length > FILMS_INITIALLY_DISPLAYED_NUMBER) {
-    const FILM_COUNT_PER_STEP = 5;
+    const filmCountPerStep = 5;
     let oldDisplayCount = FILMS_INITIALLY_DISPLAYED_NUMBER;
 
     const showMoreButtonElement = new ShowMoreButton();
@@ -136,30 +135,22 @@ if (filmsAvailableForDisplay) {
     render(filmsListElement, showMoreButtonElement, RENDER_POSITION.BEFOREEND);
 
     const removeShowMoreButtonElement = () => {
-      showMoreButtonElement.removeEventListener();
-      showMoreButtonElement.getElement().remove();
-      showMoreButtonElement.removeElement();
+      showMoreButtonElement.deleteElement();
     };
 
     showMoreButtonElement.setClickHandler(() => {
-      let displayCountIncrease = FILM_COUNT_PER_STEP;
-
+      let displayCountIncrease = filmCountPerStep;
       let newDisplayCount = oldDisplayCount + displayCountIncrease;
 
       if (FILM_CARD_MOCK_DATA.length <= newDisplayCount) {
         newDisplayCount = oldDisplayCount + (FILM_CARD_MOCK_DATA.length - oldDisplayCount);
 
-        for (let i = oldDisplayCount; i < newDisplayCount; i++) {
-          renderFilmCard(filmListContainerElement, FILM_CARD_MOCK_DATA[i]);
-          oldDisplayCount++;
-        }
-
         removeShowMoreButtonElement();
-      } else {
-        for (let i = oldDisplayCount; i < newDisplayCount; i++) {
-          renderFilmCard(filmListContainerElement, FILM_CARD_MOCK_DATA[i]);
-          oldDisplayCount++;
-        }
+      }
+
+      for (let i = oldDisplayCount; i < newDisplayCount; i++) {
+        renderFilmCard(filmListContainerElement, FILM_CARD_MOCK_DATA[i]);
+        oldDisplayCount++;
       }
     });
   }
@@ -167,7 +158,7 @@ if (filmsAvailableForDisplay) {
   // Rendering of the MOST COMMENTED and TOP RATED films
 
   if (FILMS_EXTRA_MOCK) {
-    const EXTRA_LIST_MAX_CARD_NUMBER = 2;
+    const extraListMaxCardNumber = 2;
 
     if (newSortedByRatingArray[0].rating > 0) {
       const topRatedFilmsList = new ExtraFilmsList(FILMS_EXTRA_LIST_NAMES[0]);
@@ -176,7 +167,7 @@ if (filmsAvailableForDisplay) {
 
       const topRatedFilmsContainer = topRatedFilmsList.getElement().querySelector(`.films-list__container`);
 
-      for (let i = 0; i < EXTRA_LIST_MAX_CARD_NUMBER; i++) {
+      for (let i = 0; i < extraListMaxCardNumber; i++) {
         renderFilmCard(topRatedFilmsContainer, newSortedByRatingArray[i]);
       }
     }
@@ -188,7 +179,7 @@ if (filmsAvailableForDisplay) {
 
       const mostCommentedFilmsContainer = mostCommentedFilmsList.getElement().querySelector(`.films-list__container`);
 
-      for (let i = 0; i < EXTRA_LIST_MAX_CARD_NUMBER; i++) {
+      for (let i = 0; i < extraListMaxCardNumber; i++) {
         renderFilmCard(mostCommentedFilmsContainer, newSortedByCommentCountArray[i]);
       }
     }
