@@ -26,10 +26,4 @@ export default class ShowMoreButton extends AbstractElement {
 
     this.getElement().addEventListener(`click`, this._clickHandler);
   }
-
-  deleteElement() {
-    this.getElement().remove();
-
-    this._element = null;
-  }
 }

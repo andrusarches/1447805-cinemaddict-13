@@ -3,7 +3,7 @@ import {FILM_GENRES_MAP, MOCK_DIRECTORS_MAP, MOCK_ACTORS_MAP, MOCK_WRITERS_MAP, 
 import AbstractElement from "./abstract.js";
 
 const createFilmDetailsPopupTemplate = (filmInfo) => {
-  const {title, originalTitle, rating, country, director, writers, actors, releaseDate, duration, genres, imgSrc, description, commentCount, contentRating} = filmInfo;
+  const {title, originalTitle, rating, country, director, writers, actors, releaseDate, duration, genres, imgSrc, description, commentCount, contentRating, isFavorite, isWatched, isWatchlist} = filmInfo;
 
   const getGenreHTML = (item) => {
     return `<span class="film-details__genre">${item}</span>`;
@@ -102,13 +102,13 @@ const createFilmDetailsPopupTemplate = (filmInfo) => {
                 </div>
 
                 <section class="film-details__controls">
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist"  ${isWatchlist ? `checked` : ``}>
                   <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
                   <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-                  <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+                  <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorite ? `checked` : ``}>
                   <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
                 </section>
               </div>
@@ -160,10 +160,43 @@ export default class FilmDetailsPopup extends AbstractElement {
 
     this._filmData = filmData;
     this._clickHandler = this._clickHandler.bind(this);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
+    this._watchlistClickHandler = this._watchlistClickHandler.bind(this);
+    this._watchedClickHandler = this._watchedClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmDetailsPopupTemplate(this._filmData);
+  }
+
+  _favoriteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.favoriteClick();
+  }
+
+  _watchlistClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.watchlistClick();
+  }
+
+  _watchedClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.watchedClick();
+  }
+
+  setFavoriteClickHandler(callback) {
+    this._callback.favoriteClick = callback;
+    this.getElement().querySelector(`#favorite`).addEventListener(`input`, this._favoriteClickHandler);
+  }
+
+  setWatchlistClickHandler(callback) {
+    this._callback.watchlistClick = callback;
+    this.getElement().querySelector(`#favorite`).addEventListener(`input`, this._watchlistClickHandler);
+  }
+
+  setWatchedClickHandler(callback) {
+    this._callback.watchedClick = callback;
+    this.getElement().querySelector(`#watched`).addEventListener(`input`, this._watchedClickHandler);
   }
 
   _clickHandler(evt) {

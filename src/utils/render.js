@@ -38,3 +38,30 @@ export const createElement = (template) => {
 
   return newElement.firstChild;
 };
+
+export const remove = (component) => {
+  if (!(component instanceof AbstractElement)) {
+    throw new Error(`Can remove only components`);
+  }
+
+  component.getElement().remove();
+  component.removeElement();
+};
+
+export const replace = (newChild, oldChild) => {
+  if (oldChild instanceof AbstractElement) {
+    oldChild = oldChild.getElement();
+  }
+
+  if (newChild instanceof AbstractElement) {
+    newChild = newChild.getElement();
+  }
+
+  const parent = oldChild.parentElement;
+
+  if (parent === null || oldChild === null || newChild === null) {
+    throw new Error(`Can't replace unexisting elements`);
+  }
+
+  parent.replaceChild(newChild, oldChild);
+};

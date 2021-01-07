@@ -61,10 +61,4 @@ export default class PopupCommentElement extends AbstractElement {
   getTemplate() {
     return generateCommentTemplate(this._commentData);
   }
-
-  deleteElement() {
-    this.getElement().remove();
-
-    this._element = null;
-  }
 }

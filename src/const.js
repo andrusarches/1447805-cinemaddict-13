@@ -132,4 +132,6 @@ export const CONTENT_RATING_OPTIONS = [12, 16, 18];
 
 export const FILMS_INITIALLY_DISPLAYED_NUMBER = 5;
 
+export const FILM_DISPLAY_COUNT_INCREASE = 5;
+
 export const KEYCODE_ESC = 27;

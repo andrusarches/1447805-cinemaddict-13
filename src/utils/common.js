@@ -29,3 +29,17 @@ export const getConvertedTime = (durationInMinutes) => {
 
   return (roundedHours > 0 ? `${roundedHours}h ${roundedMinutes}m` : `${roundedMinutes}m`);
 };
+
+export const updateItem = (items, update) => {
+  const index = items.findIndex((item) => item.id === update.id);
+
+  if (index === -1) {
+    return items;
+  }
+
+  return [
+    ...items.slice(0, index),
+    update,
+    ...items.slice(index + 1)
+  ];
+};
